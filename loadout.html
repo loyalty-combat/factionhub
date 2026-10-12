@@ -3,28 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Perm Loadout Builder</title>
+<title>Espada Rank Loadouts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarpanch:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jura&family=Michroma&family=Oswald&family=Kalam&family=Bangers&family=Creepster&family=Denk+One&family=Fondamento&family=Fredoka&family=Grenze+Gotisch&family=Indie+Flower&family=Josefin+Sans&family=Luckiest+Guy&family=Merriweather&family=Nunito&family=Patrick+Hand&family=Permanent+Marker&family=Roboto&family=Roboto+Condensed&family=Roboto+Mono&family=Special+Elite&family=Titillium+Web&family=Ubuntu&family=Amatic+SC&family=Arimo&family=Almendra&family=Orbitron&family=Montserrat&family=Inconsolata&family=EB+Garamond&family=Press+Start+2P&family=Comic+Neue&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fondamento&family=Roboto+Mono:wght@400;700&display=swap">
 <style>
 body { margin: 0; }
 [hidden] { display: none !important; }
-/* Layout: form column on the left, sticky preview + commands on the right; one column on phones. */
+/* Layout: choices on the left, sticky preview + commands on the right; one column on phones. */
 :root {
-  --bg: #EDF1F4;
-  --panel: #FFFFFF;
-  --ink: #14202B;
-  --muted: #566775;
-  --line: #D2DAE1;
-  --field: #F6F8FA;
-  --accent: #1A6F95;
-  --accent-ink: #FFFFFF;
-  --accent-soft: #DCEDF5;
-  --warn: #9A5600;
-  --scene: #0D151E;
-  --scene-2: #1B2A38;
+  --bg: #EDF1F4; --panel: #FFFFFF; --ink: #14202B; --muted: #566775; --line: #D2DAE1;
+  --field: #F6F8FA; --accent: #1A6F95; --accent-ink: #FFFFFF; --accent-soft: #DCEDF5; --warn: #9A5600;
+  --scene: #0D151E; --scene-2: #1B2A38;
   --display: "Sarpanch", "Arial Narrow", sans-serif;
   --body: "IBM Plex Sans", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -43,83 +34,60 @@ body { margin: 0; }
 }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; line-height: 1.5; }
-.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
+header { margin-bottom: 20px; }
 .eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 2px; }
-h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 36px); line-height: 1.05; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 36px); line-height: 1.05; margin: 0; text-wrap: balance; }
 h2 { font-family: var(--display); font-weight: 600; font-size: 18px; margin: 0; letter-spacing: .02em; }
 .lede { color: var(--muted); max-width: 62ch; margin: 6px 0 0; }
 .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
-@media (min-width: 980px) { .grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; } .side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); } }
+@media (min-width: 980px) { .grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } .side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); } }
 .col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-section.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+section.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-.code-name { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.step { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 label, .lab { font-size: 12px; font-weight: 500; color: var(--muted); display: block; margin-bottom: 4px; }
-input[type=text], select, textarea {
-  width: 100%; font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--line);
-  border-radius: 6px; padding: 7px 9px; min-width: 0;
-}
-textarea { font-family: var(--mono); font-size: 12px; resize: vertical; min-height: 64px; }
-input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+input[type=text], select { width: 100%; font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px; min-width: 0; }
+input:focus-visible, select:focus-visible, button:focus-visible, .opt input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 1px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; }
-.row > * { flex: 1 1 140px; min-width: 0; }
+.row > * { flex: 1 1 160px; min-width: 0; }
 .hint { font-size: 12px; color: var(--muted); margin: 0; }
-button { font: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--line); background: var(--field); color: var(--ink); padding: 6px 10px; }
-button:hover { border-color: var(--accent); }
-button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
-button.ghost { background: transparent; }
-button.x { padding: 4px 8px; color: var(--muted); }
-.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); margin: 0; cursor: pointer; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; margin: 0; cursor: pointer; color: var(--ink); }
 .toggle input { width: 16px; height: 16px; accent-color: var(--accent); }
 
-/* Tag editor */
-.line { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 8px; background: var(--field); }
-.line-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
-.line-head .num { font-family: var(--mono); font-size: 11px; color: var(--muted); align-self: center; min-width: 44px; }
-.line-head .f { flex: 2 1 150px; min-width: 0; }
-.line-head .w { flex: 1 1 110px; min-width: 0; }
-.seg { display: flex; gap: 6px; align-items: center; }
-.seg input[type=text] { flex: 1 1 auto; background: var(--panel); }
-.swatch { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; background: var(--panel); flex: none; }
-.swatch input[type=color] { width: 26px; height: 22px; border: 0; padding: 0; background: none; cursor: pointer; }
-.swatch input[type=checkbox] { accent-color: var(--accent); }
-.swatch span { font-size: 11px; color: var(--muted); }
-.symbols { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.symbols button { font-size: 14px; padding: 2px 9px; min-width: 32px; }
-.colorpick { display: flex; align-items: center; gap: 8px; }
-.colorpick input[type=color] { width: 40px; height: 32px; border: 1px solid var(--line); border-radius: 6px; padding: 2px; background: var(--field); }
-.colorpick code { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-
-/* Gear chips */
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { display: inline-flex; align-items: center; gap: 4px; background: var(--accent-soft); color: var(--ink); border-radius: 999px; padding: 3px 4px 3px 10px; font-family: var(--mono); font-size: 12px; }
-.chip button { border: 0; background: transparent; padding: 0 6px; color: var(--muted); }
-.suggest { display: flex; flex-wrap: wrap; gap: 6px; }
-.suggest button { font-family: var(--mono); font-size: 12px; padding: 3px 8px; }
+/* Choice tiles */
+.opts { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.opt { position: relative; display: block; margin: 0; cursor: pointer; }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt span { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; background: var(--field); height: 100%; }
+.opt b { font-weight: 600; font-size: 13px; color: var(--ink); }
+.opt small { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+.opt input:checked + span { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.opt:hover span { border-color: var(--accent); }
+.tier { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; padding: 1px 6px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); margin-left: 6px; vertical-align: 1px; }
+.swatch-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--line); margin-right: 6px; vertical-align: -1px; }
 
 /* Preview */
-.scene { position: relative; border-radius: 10px; overflow: hidden; padding-block: 26px 0; background: radial-gradient(120% 80% at 50% 0%, var(--scene-2), var(--scene)); color: #fff; min-height: 300px; display: flex; flex-direction: column; align-items: center; }
+.scene { position: relative; border-radius: 10px; overflow: hidden; padding-block: 26px 0; background: radial-gradient(120% 80% at 50% 0%, var(--scene-2), var(--scene)); color: #fff; min-height: 290px; display: flex; flex-direction: column; align-items: center; }
 .bill { text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 6px rgba(0,0,0,.6); padding-inline: 12px; max-width: 100%; overflow-wrap: anywhere; }
-.bill.name { font-size: 19px; line-height: 1.2; }
-.bill.rank { font-size: 14px; line-height: 1.25; margin-top: 8px; }
-.figure { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; opacity: .9; }
+.bill.name { font-size: 20px; line-height: 1.2; }
+.bill.rank { font-size: 13px; line-height: 1.35; margin-top: 10px; }
+.figure { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .head { width: 54px; height: 54px; border-radius: 12px; background: #3a4a58; }
 .torso { width: 110px; height: 90px; border-radius: 10px 10px 0 0; background: #2b3a47; }
 .scene-note { position: absolute; top: 8px; right: 10px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #8597a6; }
+.summary { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; margin: 0; }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; font-variant-numeric: tabular-nums; min-width: 0; overflow-wrap: anywhere; }
 
 /* Output */
 .out { display: flex; flex-direction: column; gap: 6px; }
 .out-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
 .count { font-family: var(--mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-pre.cmd { margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.55; background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 10px; white-space: pre-wrap; word-break: break-all; max-height: 220px; overflow: auto; user-select: all; }
-.warn { color: var(--warn); font-size: 12px; margin: 0; }
-.presets { display: flex; flex-wrap: wrap; gap: 6px; }
-.preset { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-.preset button { border: 0; border-radius: 0; }
-.preset button + button { border-left: 1px solid var(--line); color: var(--muted); }
+pre.cmd { margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.55; background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 10px; white-space: pre-wrap; word-break: break-all; max-height: 200px; overflow: auto; user-select: all; }
+button { font: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); padding: 6px 12px; font-weight: 600; }
 .toast { font-size: 12px; color: var(--accent); min-height: 18px; margin: 0; }
-@media (prefers-reduced-motion: no-preference) { button { transition: border-color .12s; } }
+.warn { color: var(--warn); font-size: 12px; margin: 0; }
 </style>
 </head>
 <body>
@@ -128,412 +96,328 @@ pre.cmd { margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.5
 
 <div class="wrap">
   <header>
-    <div>
-      <p class="eyebrow">SCP: Roleplay · admin commands</p>
-      <h1>Perm Loadout Builder</h1>
-      <p class="lede">Fill in the tags, look and gear. The two commands on the right update as you type, ready to copy and run. It opens with an example UN Major loaded.</p>
-    </div>
-    <div class="row" style="flex:0 1 auto">
-      <button class="ghost" id="resetExample" type="button">Load example</button>
-      <button class="ghost" id="clearAll" type="button">Start blank</button>
-    </div>
+    <p class="eyebrow">Espada · rank loadouts</p>
+    <h1>Espada Rank Loadouts</h1>
+    <p class="lede">Pick your rank, outfit, weapon and skin. Copy the two commands on the right and send them to an admin, or run them if you can.</p>
   </header>
 
   <div class="grid">
     <div class="col">
-      <section class="card" aria-labelledby="h-player">
-        <div class="card-head"><h2 id="h-player">Player</h2></div>
+      <section class="card" aria-labelledby="h-you">
+        <div class="card-head"><h2 id="h-you">You</h2><span class="step">1</span></div>
         <div class="row">
-          <div>
-            <label for="target">Username (the start of it is enough)</label>
-            <input type="text" id="target" autocomplete="off">
-          </div>
-          <div style="display:flex;align-items:end">
-            <label class="toggle" for="perm"><input type="checkbox" id="perm"> Permanent (stays after they respawn)</label>
-          </div>
-        </div>
-      </section>
-
-      <section class="card" aria-labelledby="h-name">
-        <div class="card-head"><h2 id="h-name">Name tag</h2><span class="code-name">ntag</span></div>
-        <div id="nameLines" class="col" style="gap:10px"></div>
-        <div class="row" style="flex-wrap:wrap;align-items:end">
-          <button type="button" data-addline="name" style="flex:0 0 auto">Add line</button>
-          <div class="colorpick" style="flex:1 1 220px">
-            <label class="toggle" for="cntagOn"><input type="checkbox" id="cntagOn"> Tag colour</label>
-            <input type="color" id="cntag" aria-label="Name tag colour">
-            <code id="cntagRgb"></code>
-          </div>
+          <div><label for="username">Roblox username</label><input type="text" id="username" autocomplete="off" placeholder="e.g. At0micTheNoob"></div>
+          <div><label for="nickname">Name on your tag</label><input type="text" id="nickname" autocomplete="off" placeholder="e.g. atomic"></div>
         </div>
       </section>
 
       <section class="card" aria-labelledby="h-rank">
-        <div class="card-head"><h2 id="h-rank">Rank tag</h2><span class="code-name">rtag</span></div>
-        <div id="rankLines" class="col" style="gap:10px"></div>
-        <div class="row" style="flex-wrap:wrap;align-items:end">
-          <button type="button" data-addline="rank" style="flex:0 0 auto">Add line</button>
-          <div class="colorpick" style="flex:1 1 220px">
-            <label class="toggle" for="crtagOn"><input type="checkbox" id="crtagOn"> Tag colour</label>
-            <input type="color" id="crtag" aria-label="Rank tag colour">
-            <code id="crtagRgb"></code>
-          </div>
-        </div>
-        <div class="symbols" aria-label="Insert a symbol">
-          <span class="lab" style="margin:0">Insert into the last text box:</span>
-          <button type="button" data-sym="《 ">《</button><button type="button" data-sym=" 》">》</button>
-          <button type="button" data-sym=" | ">|</button><button type="button" data-sym="// ">//</button>
-          <button type="button" data-sym="★">★</button><button type="button" data-sym="•">•</button>
-          <button type="button" data-sym="—">—</button><button type="button" data-sym="✦">✦</button>
+        <div class="card-head"><h2 id="h-rank">Rank</h2><span class="step">2</span></div>
+        <div class="opts" id="rankOpts" role="radiogroup" aria-labelledby="h-rank"></div>
+        <div id="espadaBox" class="row" hidden>
+          <div><label for="espNum">Espada number</label><select id="espNum"></select></div>
+          <div><label for="espAspect">Aspect of death</label><select id="espAspect"></select></div>
         </div>
       </section>
 
-      <section class="card" aria-labelledby="h-look">
-        <div class="card-head"><h2 id="h-look">Look</h2><span class="code-name">morph · shirt · face · hat</span></div>
-        <label class="toggle" for="removeMorph"><input type="checkbox" id="removeMorph"> Remove their morph first (needed for custom clothes to show)</label>
-        <div class="row">
-          <div><label for="shirt">Shirt ID</label><input type="text" id="shirt" inputmode="numeric" autocomplete="off"></div>
-          <div><label for="pants">Pants ID</label><input type="text" id="pants" inputmode="numeric" autocomplete="off"></div>
-          <div><label for="face">Face ID</label><input type="text" id="face" inputmode="numeric" autocomplete="off"></div>
-        </div>
-        <div>
-          <label for="accessories">Accessory IDs (commas, spaces or new lines)</label>
-          <textarea id="accessories" rows="3"></textarea>
-          <p class="hint" id="accCount"></p>
-        </div>
-        <label class="toggle" for="hatOn"><input type="checkbox" id="hatOn"> Add a coloured hat (optional)</label>
-        <div id="hatBox" class="col" style="gap:10px">
-          <div class="row">
-            <div><label for="hatCode">Hat option code</label><input type="text" id="hatCode" autocomplete="off"></div>
-            <div>
-              <span class="lab">Hat colour</span>
-              <div class="colorpick"><input type="color" id="hatColor" aria-label="Hat colour"><code id="hatRgb"></code></div>
-            </div>
-          </div>
-          <p class="hint">Goes in front of the accessory IDs. The code is copied from your command (<code>jqnvg</code>); leave it unless you know what it does.</p>
-        </div>
+      <section class="card" aria-labelledby="h-morph">
+        <div class="card-head"><h2 id="h-morph">Outfit</h2><span class="step">3</span></div>
+        <div class="opts" id="morphOpts" role="radiogroup" aria-labelledby="h-morph"></div>
+        <p class="hint" id="morphHint"></p>
       </section>
 
-      <section class="card" aria-labelledby="h-gear">
-        <div class="card-head"><h2 id="h-gear">Starter gear</h2><span class="code-name">startergear</span></div>
-        <div class="chips" id="gearChips"></div>
-        <div class="row">
-          <div><label for="gearInput">Add a tool (press Enter; short names work)</label><input type="text" id="gearInput" autocomplete="off" placeholder="e.g. medkit black"></div>
+      <section class="card" aria-labelledby="h-gun">
+        <div class="card-head"><h2 id="h-gun">Weapon</h2><span class="step">4</span></div>
+        <div class="opts" id="gunOpts" role="radiogroup" aria-labelledby="h-gun"></div>
+        <p class="hint" id="gearHint"></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-skin">
+        <div class="card-head"><h2 id="h-skin">Skin</h2><span class="step">5</span></div>
+        <div class="opts" id="skinOpts" role="radiogroup" aria-labelledby="h-skin"></div>
+        <div id="skinCustomBox" hidden>
+          <label for="skinCustom">Skin value</label>
+          <input type="text" id="skinCustom" autocomplete="off" placeholder="the same value you'd type after permskin">
         </div>
-        <div class="suggest" id="gearSuggest"></div>
       </section>
     </div>
 
     <div class="col side">
       <section class="card" aria-labelledby="h-prev">
-        <div class="card-head"><h2 id="h-prev">Preview</h2><span class="hint">Fonts are close matches, not exact</span></div>
+        <div class="card-head"><h2 id="h-prev">Preview</h2><span class="hint">Fonts are close matches</span></div>
         <div class="scene">
           <span class="scene-note">in-game look</span>
           <div class="bill name" id="prevName"></div>
           <div class="bill rank" id="prevRank"></div>
-          <div class="figure" aria-hidden="true"><div class="head"></div><div class="torso"></div></div>
+          <div class="figure" aria-hidden="true"><div class="head" id="prevHead"></div><div class="torso" id="prevTorso"></div></div>
         </div>
+        <dl class="summary" id="summary"></dl>
       </section>
 
       <section class="card" aria-labelledby="h-out">
         <div class="card-head"><h2 id="h-out">Commands</h2></div>
         <div class="out">
-          <div class="out-head"><span class="lab" style="margin:0">1 · Tags</span><span class="count" id="c1"></span><button type="button" class="primary" data-copy="cmd1">Copy</button></div>
+          <div class="out-head"><span class="lab" style="margin:0">1 · Tags</span><span class="count" id="c1"></span><button type="button" data-copy="cmd1">Copy</button></div>
           <pre class="cmd" id="cmd1"></pre>
         </div>
         <div class="out">
-          <div class="out-head"><span class="lab" style="margin:0">2 · Look and gear</span><span class="count" id="c2"></span><button type="button" class="primary" data-copy="cmd2">Copy</button></div>
+          <div class="out-head"><span class="lab" style="margin:0">2 · Outfit, skin and gear</span><span class="count" id="c2"></span><button type="button" data-copy="cmd2">Copy</button></div>
           <pre class="cmd" id="cmd2"></pre>
         </div>
         <p class="toast" id="toast" role="status"></p>
         <div id="warnings"></div>
-      </section>
-
-      <section class="card" aria-labelledby="h-presets">
-        <div class="card-head"><h2 id="h-presets">Saved loadouts</h2><span class="hint">Kept in this browser only</span></div>
-        <div class="row">
-          <div><label for="presetName">Name</label><input type="text" id="presetName" placeholder="e.g. UNPK Major" autocomplete="off"></div>
-          <div style="display:flex;align-items:end;flex:0 0 auto"><button type="button" id="savePreset">Save</button></div>
-        </div>
-        <div class="presets" id="presetList"></div>
       </section>
     </div>
   </div>
 </div>
 
 <script>
+/* =========================================================================
+   SETTINGS: everything you might want to change is in this block.
+   ========================================================================= */
+var CONFIG = {
+  // Outfits. Shirt, pants and accessory IDs from the catalog.
+  morphs: {
+    "White LR": { colour: "#E8ECEF", shirt: "80977391908581", pants: "95711085559227",
+      accessories: [92151693614313, 108525494404332, 105743484068334, 125959323314699, 114727615702764, 138996587050845, 136979846937477, 83709735495889, 113570481271881] },
+    "White MR": { colour: "#E8ECEF", shirt: "80977391908581", pants: "95711085559227",
+      accessories: [137628853841735, 108525494404332, 105743484068334, 125959323314699, 138438118439149, 114727615702764, 138996587050845, 136979846937477, 83709735495889, 113570481271881] },
+    "White HR": { colour: "#E8ECEF", shirt: "80977391908581", pants: "95711085559227",
+      accessories: [12353227209, 105743484068334, 125959323314699, 138438118439149, 114727615702764, 138996587050845, 136979846937477, 83709735495889, 113570481271881] },
+    "Black LR": { colour: "#1C1F23", shirt: "1287905131", pants: "9080313297",
+      accessories: [127781925591577, 13834560407, 18917744971, 111740885429679, 89750129834102, 119380454918540, 140478355726493, 95684109253694, 17706162506, 17725529915] },
+    "Black MR": { colour: "#1C1F23", shirt: "1287905131", pants: "9080313297",
+      accessories: [14243209266, 13834560407, 18917744971, 111740885429679, 89750129834102, 119380454918540, 140478355726493, 95684109253694, 17706162506, 17725529915] },
+    "Black HR": { colour: "#1C1F23", shirt: "1287905131", pants: "9080313297",
+      accessories: [17561033207, 140478355726493, 95684109253694, 17706162506, 17725529915, 135783880501594] }
+  },
+
+  // Ranks, lowest to highest, and the tier each one belongs to.
+  ranks: [
+    { name: "Private", tier: "LR" },
+    { name: "Private First Class", tier: "LR" },
+    { name: "Corporal", tier: "MR" },
+    { name: "Sergeant", tier: "MR" },
+    { name: "Lieutenant", tier: "HR" },
+    { name: "Captain", tier: "HR" },
+    { name: "Espada", tier: "HC", espada: true }
+  ],
+
+  // Espada numbers and aspects of death. Picking a number suggests its
+  // usual aspect, but anyone can pick any aspect.
+  espada: [
+    { number: "0", aspect: "Rage" },
+    { number: "1", aspect: "Solitude" },
+    { number: "2", aspect: "Old Age" },
+    { number: "3", aspect: "Sacrifice" },
+    { number: "4", aspect: "Nihilism" },
+    { number: "5", aspect: "Despair" },
+    { number: "6", aspect: "Destruction" },
+    { number: "7", aspect: "Intoxication" },
+    { number: "8", aspect: "Madness" },
+    { number: "9", aspect: "Greed" },
+    { number: "10", aspect: "Rage" }
+  ],
+
+  // Weapons everyone can choose from. "gear" is the startergear name.
+  weapons: [
+    { label: "XM250", gear: "xm" },
+    { label: "ACR", gear: "acr" },
+    { label: "M4", gear: "m4" },
+    { label: "AK-47", gear: "ak" }
+  ],
+
+  // Gear everyone gets on top of their weapon, per tier.
+  gear: {
+    LR: ["pistol", "medkit", "radio", "detain"],
+    MR: ["pistol", "medkit", "radio", "detain"],
+    HR: ["pistol", "medkit", "radio", "detain"],
+    HC: ["pistol", "medkit black", "radio", "de", "detain"]
+  },
+
+  // Skin choices: label and the value typed after "permskin <player>".
+  // "custom" lets the member type their own value.
+  skins: [
+    { label: "Light Orange", value: "Light orange", colour: "#EAB892" },
+    { label: "Custom", value: "custom" }
+  ],
+
+  // Tag wording. {tag} {nick} {tier} {rank} {number} {aspect} are filled in.
+  nameTag: {
+    font: "Fondamento", weight: "Regular",
+    parts: [
+      { text: "{tag} | " },
+      { text: "\"{nick}\"", colour: "#5FCB45" },
+      { text: " | [{tier}]" }
+    ]
+  },
+  factionTag: "Espada-10",
+  rankTag: [
+    { font: "RobotoMono", weight: "Regular", text: "《 [E-10] Espada Combatant 》", espadaText: "《 [E-10] Espada's Finest 》" },
+    { font: "RobotoMono", weight: "Bold", text: "《 // {rank} 》", espadaText: "《 // Espada - {number}, \"{aspect}\" 》" }
+  ],
+
+  // Name tag / rank tag colour commands (r g b). Set to null to leave them out.
+  nameTagColour: "0 0 0",
+  rankTagColour: "0 0 0",
+
+  // Everything is permanent (perm...). Set to "" for until-respawn versions.
+  prefix: "perm"
+};
+/* ========================================================================= */
+
 (function () {
-  // Roblox rich-text font names -> closest Google font for the preview.
-  var FONTS = {
-    Sarpanch: "Sarpanch", Jura: "Jura", Michroma: "Michroma", Fantasy: "Almendra", Oswald: "Oswald",
-    Kalam: "Kalam", Bangers: "Bangers", Creepster: "Creepster", DenkOne: "Denk One", Fondamento: "Fondamento",
-    FredokaOne: "Fredoka", GrenzeGotisch: "Grenze Gotisch", IndieFlower: "Indie Flower", JosefinSans: "Josefin Sans",
-    LuckiestGuy: "Luckiest Guy", Merriweather: "Merriweather", Nunito: "Nunito", PatrickHand: "Patrick Hand",
-    PermanentMarker: "Permanent Marker", Roboto: "Roboto", RobotoCondensed: "Roboto Condensed", RobotoMono: "Roboto Mono",
-    SpecialElite: "Special Elite", TitilliumWeb: "Titillium Web", Ubuntu: "Ubuntu", AmaticSC: "Amatic SC",
-    Arimo: "Arimo", Arial: "Arimo", SciFi: "Orbitron", Gotham: "Montserrat", Code: "Inconsolata",
-    Garamond: "EB Garamond", Arcade: "Press Start 2P", Cartoon: "Comic Neue", SourceSans: "IBM Plex Sans",
-    Highway: "Ubuntu", Antique: "EB Garamond", Legacy: "Arimo"
-  };
-  var FONT_NAMES = Object.keys(FONTS).sort();
-  var WEIGHTS = ["Thin", "ExtraLight", "Light", "Regular", "Medium", "SemiBold", "Bold", "ExtraBold", "Heavy"];
-  var GEAR_SUGGEST = ["xm", "pistol", "de", "medkit", "medkit black", "radio", "knife", "baton", "shield"];
-  var STORE = "perm-loadout-presets";
-
-  function example() {
-    return {
-      target: "at0", perm: true,
-      name: { lines: [
-        { font: "Sarpanch", weight: "Regular", segs: [{ text: "United Nations | ", color: "" }, { text: "atomic", color: "#5BC0EB" }] },
-        { font: "Sarpanch", weight: "Regular", segs: [{ text: "[MR]", color: "" }] }
-      ] },
-      rank: { lines: [
-        { font: "Fantasy", weight: "Medium", segs: [{ text: "《 [UNPK] United Nations Peacekeeper 》", color: "" }] },
-        { font: "Jura", weight: "Light", segs: [{ text: "《 ", color: "" }, { text: "// Major ", color: "#FFD700" }, { text: "| 》", color: "" }] }
-      ] },
-      cntagOn: true, cntag: "#000000", crtagOn: true, crtag: "#000000",
-      removeMorph: true, shirt: "118931520699261", pants: "92118987370905", face: "261880920078238",
-      accessories: "93212233380972, 97112189371404, 70418969319342, 102790501854441, 126433628955834, 109882382878007, 108745952632417, 17550297611, 71744746582602, 117720125684817, 17401160840, 13631127372",
-      hatOn: false, hatCode: "jqnvg", hatColor: "#009DC4",
-      gear: ["xm", "pistol", "medkit black", "radio", "de"]
-    };
-  }
-  function blank() {
-    return {
-      target: "", perm: true,
-      name: { lines: [{ font: "Sarpanch", weight: "Regular", segs: [{ text: "", color: "" }] }] },
-      rank: { lines: [{ font: "Jura", weight: "Regular", segs: [{ text: "", color: "" }] }] },
-      cntagOn: false, cntag: "#000000", crtagOn: false, crtag: "#000000",
-      removeMorph: false, shirt: "", pants: "", face: "", accessories: "", hatOn: false, hatCode: "jqnvg", hatColor: "#009DC4", gear: []
-    };
-  }
-
-  var state = example();
-  var lastText = null;
-  var warnings = [];
-
+  var PREVIEW_FONTS = { Fondamento: '"Fondamento", serif', RobotoMono: '"Roboto Mono", ui-monospace, monospace' };
+  var WEIGHTS = { Thin: 100, ExtraLight: 200, Light: 300, Regular: 400, Medium: 500, SemiBold: 600, Bold: 700, ExtraBold: 800, Heavy: 900 };
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function rgb(hex) {
-    var h = (hex || "#000000").replace("#", "");
-    return [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16) || 0; }).join(" ");
+
+  var state = { rank: 0, morph: "", gun: 0, skin: 0, espNum: 4, espAspect: "Nihilism" };
+
+  function rank() { return CONFIG.ranks[state.rank]; }
+  function morphChoices() {
+    var r = rank();
+    if (r.espada) return Object.keys(CONFIG.morphs);
+    return Object.keys(CONFIG.morphs).filter(function (m) { return m.slice(-2) === r.tier; });
+  }
+  function fill(text) {
+    var r = rank(), user = $("username").value.trim();
+    var vals = {
+      tag: CONFIG.factionTag,
+      nick: ($("nickname").value.trim() || user || "name").replace(/&/g, ""),
+      tier: r.tier,
+      rank: r.name,
+      number: CONFIG.espada[state.espNum].number,
+      aspect: state.espAspect
+    };
+    return text.replace(/\{(\w+)\}/g, function (_, k) { return vals[k] != null ? vals[k] : ""; });
+  }
+  function fontOpen(font, weight) { return '<font face="' + font + '"' + (weight && weight !== "Regular" ? ' weight="' + weight + '"' : "") + ">"; }
+
+  function nameTagRich() {
+    var t = CONFIG.nameTag;
+    return fontOpen(t.font, t.weight) + t.parts.map(function (p) {
+      var s = fill(p.text);
+      return p.colour ? '<font color="' + p.colour.toUpperCase() + '">' + s + "</font>" : s;
+    }).join("") + "</font>";
+  }
+  function rankLines() {
+    return CONFIG.rankTag.map(function (l) { return { font: l.font, weight: l.weight, text: fill(rank().espada && l.espadaText ? l.espadaText : l.text) }; });
+  }
+  function rankTagRich() { return rankLines().map(function (l) { return fontOpen(l.font, l.weight) + l.text + "</font>"; }).join("<br/>"); }
+
+  function skinValue() {
+    var s = CONFIG.skins[state.skin];
+    return s.value === "custom" ? $("skinCustom").value.trim() : s.value;
   }
 
-  // ---------- rich text ----------
-  function clean(text) {
-    var t = String(text || "");
-    if (t.indexOf("&") >= 0) { warnings.push("& was removed from your text: it separates commands, so it would cut the command in two."); t = t.replace(/&/g, ""); }
-    if (/[<>]/.test(t)) { warnings.push("< and > can break the tag's formatting. Use 《 》 or ‹ › instead."); }
-    return t;
-  }
-  function segText(s) {
-    var t = clean(s.text);
-    if (!t) return "";
-    return s.color ? '<font color="' + s.color.toUpperCase() + '">' + t + "</font>" : t;
-  }
-  function lineText(l) { return l.segs.map(segText).join(""); }
-  function openFont(l) {
-    var a = ' face="' + l.font + '"';
-    if (l.weight && l.weight !== "Regular") a += ' weight="' + l.weight + '"';
-    return "<font" + a + ">";
-  }
-  function tagText(tag) {
-    var lines = tag.lines.filter(function (l) { return lineText(l); });
-    if (!lines.length) return "";
-    var same = lines.every(function (l) { return l.font === lines[0].font && l.weight === lines[0].weight; });
-    if (same) return openFont(lines[0]) + lines.map(lineText).join("<br/>") + "</font>";
-    return lines.map(function (l) { return openFont(l) + lineText(l) + "</font>"; }).join("<br/>");
-  }
-
-  // ---------- commands ----------
-  function ids(text) { return String(text || "").split(/[\s,]+/).filter(function (x) { return /^\d+$/.test(x); }); }
   function build() {
-    warnings = [];
-    var p = state.perm ? "perm" : "";
-    var t = state.target.trim().replace(/\s+/g, "") || "me";
-    var one = [], two = [];
-    var nt = tagText(state.name), rt = tagText(state.rank);
-    if (nt) one.push(p + "ntag " + t + " " + nt);
-    if (rt) one.push(p + "rtag " + t + " " + rt);
+    var p = CONFIG.prefix, warn = [];
+    var user = $("username").value.trim().replace(/\s+/g, "");
+    var t = user || "me";
+    if (!user) warn.push("Type your Roblox username so the commands target you (they use \"me\" until then).");
+    var m = CONFIG.morphs[state.morph];
+    var gun = CONFIG.weapons[state.gun];
+    var gear = [gun.gear].concat(CONFIG.gear[rank().tier] || []);
 
-    if (state.removeMorph) two.push(p + "morph " + t + " remove");
-    var shirt = ids(state.shirt)[0], pants = ids(state.pants)[0], face = ids(state.face)[0];
-    if (shirt || pants) two.push(p + "shirt " + t + " " + (shirt || "0") + (pants ? " " + pants : "") + " " + t + " ");
-    if (face) two.push(p + "face " + t + " " + face + " " + t + " ");
-    var acc = ids(state.accessories);
-    if (state.hatOn) two.push(p + "hat " + t + " " + (state.hatCode.trim() || "jqnvg") + " " + rgb(state.hatColor) + (acc.length ? "," + acc.join(",") : ""));
-    else if (acc.length) two.push(p + "hat " + t + " " + acc.join(","));
-    if (state.crtagOn) two.push(p + "crtag " + t + " " + rgb(state.crtag));
-    if (state.cntagOn) two.push(p + "cntag " + t + " " + rgb(state.cntag));
-    var gear = state.gear.map(function (g) { return clean(g).replace(/,/g, " ").trim(); }).filter(Boolean);
-    if (gear.length) two.push(" startergear " + t + " " + gear.join(","));
-
-    if (!state.target.trim()) warnings.push("No username yet, so the commands use \"me\".");
-    if (/\D/.test(String(state.shirt).replace(/\s/g, "")) || /\D/.test(String(state.pants).replace(/\s/g, "")) || /\D/.test(String(state.face).replace(/\s/g, ""))) warnings.push("Shirt, pants and face should be numbers only (the ID from the catalog link).");
-    return { one: one.length ? "run " + one.join("&") : "", two: two.length ? "run " + two.join("&") : "" };
+    var one = "run " + p + "ntag " + t + " " + nameTagRich() + "&" + p + "rtag " + t + " " + rankTagRich();
+    var two = ["" + p + "morph " + t + " remove",
+      p + "shirt " + t + " " + m.shirt + " " + m.pants + " " + t + " ",
+      p + "hat " + t + " " + m.accessories.join(",")];
+    var skin = skinValue();
+    if (skin) two.push(p + "skin " + t + " " + skin);
+    else if (CONFIG.skins[state.skin].value === "custom") warn.push("Type a skin value, or pick Default.");
+    if (CONFIG.rankTagColour) two.push(p + "crtag " + t + " " + CONFIG.rankTagColour);
+    if (CONFIG.nameTagColour) two.push(p + "cntag " + t + " " + CONFIG.nameTagColour);
+    two.push(" startergear " + t + " " + gear.join(","));
+    if (/&/.test($("nickname").value)) warn.push("& was removed from your tag name: it would split the command.");
+    return { one: one, two: "run " + two.join("&"), gear: gear, warn: warn };
   }
 
-  // ---------- preview ----------
-  function previewHtml(tag) {
-    return tag.lines.filter(function (l) { return l.segs.some(function (s) { return s.text; }); }).map(function (l) {
-      var w = Math.max(100, (WEIGHTS.indexOf(l.weight) + 1) * 100);
-      var fam = FONTS[l.font] ? '"' + FONTS[l.font] + '", ' : "";
-      return '<div style="font-family:' + esc(fam) + 'system-ui,sans-serif;font-weight:' + w + '">' +
-        l.segs.map(function (s) { return s.color ? '<span style="color:' + esc(s.color) + '">' + esc(s.text) + "</span>" : esc(s.text); }).join("") + "</div>";
+  function preview() {
+    var t = CONFIG.nameTag;
+    $("prevName").innerHTML = '<div style="font-family:' + esc(PREVIEW_FONTS[t.font] || "serif") + ';font-weight:' + (WEIGHTS[t.weight] || 400) + '">' +
+      t.parts.map(function (p) { var s = esc(fill(p.text)); return p.colour ? '<span style="color:' + esc(p.colour) + '">' + s + "</span>" : s; }).join("") + "</div>";
+    $("prevRank").innerHTML = rankLines().map(function (l) {
+      return '<div style="font-family:' + esc(PREVIEW_FONTS[l.font] || "monospace") + ';font-weight:' + (WEIGHTS[l.weight] || 400) + '">' + esc(l.text) + "</div>";
     }).join("");
+    var m = CONFIG.morphs[state.morph], sk = CONFIG.skins[state.skin];
+    $("prevTorso").style.background = m.colour;
+    $("prevHead").style.background = sk.colour || "#3a4a58";
   }
 
-  // ---------- render ----------
   function update() {
     var c = build();
-    $("cmd1").textContent = c.one || "(nothing yet: add some tag text)";
-    $("cmd2").textContent = c.two || "(nothing yet: add clothes, accessories or gear)";
-    $("c1").textContent = c.one.length + " characters";
-    $("c2").textContent = c.two.length + " characters";
-    $("prevName").innerHTML = previewHtml(state.name);
-    $("prevRank").innerHTML = previewHtml(state.rank);
-    $("cntagRgb").textContent = state.cntagOn ? rgb(state.cntag) : "not set";
-    $("crtagRgb").textContent = state.crtagOn ? rgb(state.crtag) : "not set";
-    $("hatRgb").textContent = rgb(state.hatColor);
-    $("hatBox").hidden = !state.hatOn;
-    var n = ids(state.accessories).length;
-    $("accCount").textContent = n + (n === 1 ? " accessory" : " accessories");
-    var uniq = warnings.filter(function (w, i) { return warnings.indexOf(w) === i; });
-    $("warnings").innerHTML = uniq.map(function (w) { return '<p class="warn">' + esc(w) + "</p>"; }).join("");
+    $("cmd1").textContent = c.one; $("cmd2").textContent = c.two;
+    $("c1").textContent = c.one.length + " characters"; $("c2").textContent = c.two.length + " characters";
+    var r = rank(), m = CONFIG.morphs[state.morph];
+    $("summary").innerHTML =
+      "<dt>Rank</dt><dd>" + esc(r.name) + ' <span class="tier">' + r.tier + "</span></dd>" +
+      (r.espada ? "<dt>Espada</dt><dd>" + esc(CONFIG.espada[state.espNum].number + " · " + state.espAspect) + "</dd>" : "") +
+      "<dt>Outfit</dt><dd>" + esc(state.morph) + " · " + m.accessories.length + " accessories</dd>" +
+      "<dt>Gear</dt><dd>" + esc(c.gear.join(", ")) + "</dd>";
+    $("gearHint").textContent = "You also get: " + (CONFIG.gear[r.tier] || []).join(", ") + ".";
+    $("warnings").innerHTML = c.warn.map(function (w) { return '<p class="warn">' + esc(w) + "</p>"; }).join("");
+    preview();
   }
 
-  function options(list, current) {
-    return list.map(function (v) { return '<option' + (v === current ? " selected" : "") + ">" + esc(v) + "</option>"; }).join("");
-  }
-
-  function renderLines(which) {
-    var box = $(which === "name" ? "nameLines" : "rankLines");
-    var tag = state[which];
-    box.innerHTML = tag.lines.map(function (l, li) {
-      var segs = l.segs.map(function (s, si) {
-        var id = which + "-" + li + "-" + si;
-        return '<div class="seg">' +
-          '<input type="text" id="t-' + id + '" data-k="text" data-w="' + which + '" data-l="' + li + '" data-s="' + si + '" value="' + esc(s.text) + '" aria-label="Line ' + (li + 1) + ' text ' + (si + 1) + '">' +
-          '<span class="swatch"><input type="checkbox" id="cc-' + id + '" data-k="coloron" data-w="' + which + '" data-l="' + li + '" data-s="' + si + '"' + (s.color ? " checked" : "") + ' aria-label="Colour this text">' +
-          '<input type="color" id="c-' + id + '" data-k="color" data-w="' + which + '" data-l="' + li + '" data-s="' + si + '" value="' + esc(s.color || "#FFFFFF") + '" aria-label="Text colour"><span>colour</span></span>' +
-          (l.segs.length > 1 ? '<button type="button" class="x" data-delseg="' + which + "," + li + "," + si + '" aria-label="Remove this text">✕</button>' : "") +
-          "</div>";
-      }).join("");
-      return '<div class="line">' +
-        '<div class="line-head"><span class="num">LINE ' + (li + 1) + "</span>" +
-        '<div class="f"><label for="f-' + which + li + '">Font</label><select id="f-' + which + li + '" data-k="font" data-w="' + which + '" data-l="' + li + '">' + options(FONT_NAMES, l.font) + "</select></div>" +
-        '<div class="w"><label for="w-' + which + li + '">Weight</label><select id="w-' + which + li + '" data-k="weight" data-w="' + which + '" data-l="' + li + '">' + options(WEIGHTS, l.weight) + "</select></div>" +
-        (tag.lines.length > 1 ? '<button type="button" class="x" data-delline="' + which + "," + li + '" aria-label="Remove line ' + (li + 1) + '">Remove line</button>' : "") +
-        "</div>" + segs +
-        '<div><button type="button" class="ghost" data-addseg="' + which + "," + li + '">Add text in another colour</button></div>' +
-        "</div>";
+  function tiles(box, name, items, current) {
+    $(box).innerHTML = items.map(function (it, i) {
+      return '<label class="opt"><input type="radio" name="' + name + '" value="' + i + '"' + (i === current ? " checked" : "") + '><span>' + it + "</span></label>";
     }).join("");
   }
 
-  function renderGear() {
-    $("gearChips").innerHTML = state.gear.length ? state.gear.map(function (g, i) {
-      return '<span class="chip">' + esc(g) + '<button type="button" data-delgear="' + i + '" aria-label="Remove ' + esc(g) + '">✕</button></span>';
-    }).join("") : '<p class="hint">No tools yet.</p>';
-    $("gearSuggest").innerHTML = GEAR_SUGGEST.filter(function (g) { return state.gear.indexOf(g) < 0; })
-      .map(function (g) { return '<button type="button" data-addgear="' + esc(g) + '">+ ' + esc(g) + "</button>"; }).join("");
+  function renderMorphs() {
+    var choices = morphChoices();
+    if (choices.indexOf(state.morph) < 0) state.morph = choices[0];
+    tiles("morphOpts", "morph", choices.map(function (k) {
+      return '<b><i class="swatch-dot" style="background:' + CONFIG.morphs[k].colour + '"></i>' + esc(k) + "</b><small>" + CONFIG.morphs[k].accessories.length + " accessories</small>";
+    }), choices.indexOf(state.morph));
+    $("morphHint").textContent = rank().espada ? "Espada can wear any outfit." : "Your rank wears the " + rank().tier + " outfit. Pick white or black.";
   }
 
   function renderAll() {
-    $("target").value = state.target;
-    $("perm").checked = state.perm;
-    $("cntagOn").checked = state.cntagOn; $("cntag").value = state.cntag;
-    $("crtagOn").checked = state.crtagOn; $("crtag").value = state.crtag;
-    $("removeMorph").checked = state.removeMorph;
-    ["shirt", "pants", "face", "accessories", "hatCode"].forEach(function (k) { $(k).value = state[k]; });
-    $("hatColor").value = state.hatColor;
-    $("hatOn").checked = !!state.hatOn;
-    renderLines("name"); renderLines("rank"); renderGear(); renderPresets(); update();
+    tiles("rankOpts", "rank", CONFIG.ranks.map(function (r) { return "<b>" + esc(r.name) + '</b><small>' + r.tier + "</small>"; }), state.rank);
+    tiles("gunOpts", "gun", CONFIG.weapons.map(function (w) { return "<b>" + esc(w.label) + "</b><small>" + esc(w.gear) + "</small>"; }), state.gun);
+    tiles("skinOpts", "skin", CONFIG.skins.map(function (s) {
+      return "<b>" + (s.colour ? '<i class="swatch-dot" style="background:' + s.colour + '"></i>' : "") + esc(s.label) + "</b><small>" + (s.value === "custom" ? "type your own" : "permskin " + esc(s.value)) + "</small>";
+    }), state.skin);
+    $("espNum").innerHTML = CONFIG.espada.map(function (e, i) { return '<option value="' + i + '"' + (i === state.espNum ? " selected" : "") + ">Espada " + esc(e.number) + "</option>"; }).join("");
+    var aspects = CONFIG.espada.map(function (e) { return e.aspect; }).filter(function (a, i, arr) { return arr.indexOf(a) === i; });
+    $("espAspect").innerHTML = aspects.map(function (a) { return "<option" + (a === state.espAspect ? " selected" : "") + ">" + esc(a) + "</option>"; }).join("");
+    $("espadaBox").hidden = !rank().espada;
+    $("skinCustomBox").hidden = CONFIG.skins[state.skin].value !== "custom";
+    renderMorphs();
+    update();
   }
 
-  // ---------- events ----------
-  document.addEventListener("input", function (e) {
-    var el = e.target, k = el.dataset.k;
-    if (k) {
-      var line = state[el.dataset.w].lines[+el.dataset.l];
-      if (k === "font" || k === "weight") line[k] = el.value;
-      else {
-        var seg = line.segs[+el.dataset.s];
-        if (k === "text") seg.text = el.value;
-        if (k === "color") { seg.color = el.value; var cb = $("cc-" + el.id.slice(2)); if (cb) cb.checked = true; }
-        if (k === "coloron") seg.color = el.checked ? ($("c-" + el.id.slice(3)).value || "#FFFFFF") : "";
-      }
-      return update();
-    }
-    var simple = { target: "value", shirt: "value", pants: "value", face: "value", accessories: "value", hatCode: "value", hatColor: "value", cntag: "value", crtag: "value", perm: "checked", cntagOn: "checked", crtagOn: "checked", removeMorph: "checked", hatOn: "checked" };
-    if (simple[el.id]) {
-      state[el.id] = el[simple[el.id]];
-      if (el.id === "cntag") { state.cntagOn = true; $("cntagOn").checked = true; }
-      if (el.id === "crtag") { state.crtagOn = true; $("crtagOn").checked = true; }
-      update();
-    }
+  document.addEventListener("change", function (e) {
+    var el = e.target;
+    if (el.name === "rank") { state.rank = +el.value; renderAll(); return; }
+    if (el.name === "morph") { state.morph = morphChoices()[+el.value]; }
+    if (el.name === "gun") state.gun = +el.value;
+    if (el.name === "skin") { state.skin = +el.value; $("skinCustomBox").hidden = CONFIG.skins[state.skin].value !== "custom"; }
+    if (el.id === "espNum") { state.espNum = +el.value; state.espAspect = CONFIG.espada[state.espNum].aspect; $("espAspect").value = state.espAspect; }
+    if (el.id === "espAspect") state.espAspect = el.value;
+    update();
   });
-  document.addEventListener("change", function (e) { if (e.target.type === "checkbox" || e.target.tagName === "SELECT") e.target.dispatchEvent(new Event("input", { bubbles: true })); });
+  ["username", "nickname", "skinCustom"].forEach(function (id) { $(id).addEventListener("input", update); });
 
-  document.addEventListener("focusin", function (e) { if (e.target.dataset && e.target.dataset.k === "text") lastText = e.target; });
-
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest("button"); if (!b) return;
-    var d = b.dataset, parts;
-    if (d.addline) { state[d.addline].lines.push({ font: state[d.addline].lines.slice(-1)[0].font, weight: "Regular", segs: [{ text: "", color: "" }] }); renderLines(d.addline); update(); }
-    else if (d.delline) { parts = d.delline.split(","); state[parts[0]].lines.splice(+parts[1], 1); renderLines(parts[0]); update(); }
-    else if (d.addseg) { parts = d.addseg.split(","); state[parts[0]].lines[+parts[1]].segs.push({ text: "", color: "#FFD700" }); renderLines(parts[0]); update(); }
-    else if (d.delseg) { parts = d.delseg.split(","); state[parts[0]].lines[+parts[1]].segs.splice(+parts[2], 1); renderLines(parts[0]); update(); }
-    else if (d.sym) {
-      if (!lastText || !document.body.contains(lastText)) return toast("Click into a text box first, then pick a symbol.");
-      var s = lastText.selectionStart != null ? lastText.selectionStart : lastText.value.length;
-      var en = lastText.selectionEnd != null ? lastText.selectionEnd : s;
-      lastText.value = lastText.value.slice(0, s) + d.sym + lastText.value.slice(en);
-      lastText.focus(); lastText.setSelectionRange(s + d.sym.length, s + d.sym.length);
-      lastText.dispatchEvent(new Event("input", { bubbles: true }));
-    }
-    else if (d.addgear) { state.gear.push(d.addgear); renderGear(); update(); }
-    else if (d.delgear != null) { state.gear.splice(+d.delgear, 1); renderGear(); update(); }
-    else if (d.copy) copy($(d.copy).textContent, $(d.copy));
-    else if (d.load) { var all = readPresets(); if (all[d.load]) { state = JSON.parse(JSON.stringify(all[d.load])); renderAll(); toast("Loaded " + d.load + "."); } }
-    else if (d.delpreset) { var all2 = readPresets(); delete all2[d.delpreset]; writePresets(all2); renderPresets(); toast("Deleted " + d.delpreset + "."); }
-  });
-
-  $("gearInput").addEventListener("keydown", function (e) {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      var v = this.value.trim().replace(/,/g, "");
-      if (v) { state.gear.push(v); this.value = ""; renderGear(); update(); }
-    }
-  });
-  $("resetExample").addEventListener("click", function () { state = example(); renderAll(); toast("Example loaded."); });
-  $("clearAll").addEventListener("click", function () { state = blank(); renderAll(); toast("Cleared."); });
-  $("savePreset").addEventListener("click", function () {
-    var name = $("presetName").value.trim();
-    if (!name) return toast("Type a name for this loadout first.");
-    var all = readPresets(); all[name] = JSON.parse(JSON.stringify(state));
-    if (writePresets(all)) { $("presetName").value = ""; renderPresets(); toast("Saved " + name + "."); }
-    else toast("This browser won't let the page save. Copy the commands instead.");
-  });
-
-  // ---------- presets (this browser only) ----------
-  function readPresets() { try { return JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (err) { return {}; } }
-  function writePresets(all) { try { localStorage.setItem(STORE, JSON.stringify(all)); return true; } catch (err) { return false; } }
-  function renderPresets() {
-    var names = Object.keys(readPresets()).sort();
-    $("presetList").innerHTML = names.length ? names.map(function (n) {
-      return '<span class="preset"><button type="button" data-load="' + esc(n) + '">' + esc(n) + '</button><button type="button" data-delpreset="' + esc(n) + '" aria-label="Delete ' + esc(n) + '">✕</button></span>';
-    }).join("") : '<p class="hint">Nothing saved yet. Save one loadout per rank or faction to switch between them quickly.</p>';
-  }
-
-  // ---------- copy ----------
   var toastTimer;
   function toast(msg) { $("toast").textContent = msg; clearTimeout(toastTimer); toastTimer = setTimeout(function () { $("toast").textContent = ""; }, 2600); }
   function selectText(el) { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-  function copy(text, el) {
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-copy]"); if (!b) return;
+    var el = $(b.dataset.copy);
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { toast("Copied."); }, function () { selectText(el); toast("Selected. Press Ctrl+C (or Cmd+C) to copy."); });
+      navigator.clipboard.writeText(el.textContent).then(function () { toast("Copied."); }, function () { selectText(el); toast("Selected. Press Ctrl+C (or Cmd+C) to copy."); });
     } else { selectText(el); toast("Selected. Press Ctrl+C (or Cmd+C) to copy."); }
-  }
+  });
 
+  // Opens as an example: Espada 4, Nihilism, as in your screenshot.
+  $("username").value = "At0micTheNoob";
+  $("nickname").value = "atomic";
+  state.rank = CONFIG.ranks.length - 1;
   renderAll();
 })();
 </script>
