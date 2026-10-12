@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Faction Hub Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarpanch:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one centred column; two tool cards side by side, stacked on phones. */
+:root {
+  --bg: #EDF1F4; --panel: #FFFFFF; --ink: #14202B; --muted: #566775; --line: #D2DAE1; --accent: #1A6F95;
+  --display: "Sarpanch", "Arial Narrow", sans-serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0E151C; --panel: #15202A; --ink: #E2E9EF; --muted: #93A3B1; --line: #263540; --accent: #5BC0EB; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #0E151C; --panel: #15202A; --ink: #E2E9EF; --muted: #93A3B1; --line: #263540; --accent: #5BC0EB; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 48px; display: flex; flex-direction: column; gap: 28px; }
+.eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.lede { color: var(--muted); margin: 8px 0 0; max-width: 60ch; }
+.tools { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+a.tool { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; min-width: 0; }
+a.tool:hover, a.tool:focus-visible { border-color: var(--accent); outline: none; }
+a.tool h2 { font-family: var(--display); font-weight: 600; font-size: 21px; margin: 0; }
+a.tool p { margin: 0; color: var(--muted); }
+.cmd { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.go { margin-top: auto; color: var(--accent); font-weight: 500; }
+@media (prefers-reduced-motion: no-preference) { a.tool { transition: border-color .12s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">SCP: Roleplay · faction training hub</p>
+    <h1>Faction Hub Tools</h1>
+    <p class="lede">Builders for faction leaders and admins. Fill in a form, then copy the result into the server or send it to an admin.</p>
+  </header>
+  <div class="tools">
+    <a class="tool" href="kits.html">
+      <span class="cmd">Factions.lua</span>
+      <h2>Faction Kit Builder</h2>
+      <p>Set your faction's name, colours, font and kits, then send the result to an admin to add to the server.</p>
+      <span class="go">Open →</span>
+    </a>
+    <a class="tool" href="loadout.html">
+      <span class="cmd">permntag · permrtag · startergear</span>
+      <h2>Perm Loadout Builder</h2>
+      <p>Design a player's name tag, rank tag, clothes, accessories and starter gear, and get the commands to run.</p>
+      <span class="go">Open →</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>
