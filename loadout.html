@@ -295,7 +295,7 @@ var CONFIG = {
   }
   // The trailing space matters: the game drops the first character after a
   // font tag, so the space is lost instead of the first letter.
-  function fontOpen(font, weight) { return '<font face="' + font + '"' + (weight && weight !== "Regular" ? ' weight="' + weight + '"' : "") + "> "; }
+  function fontOpen(font, weight) { return '<font face="' + font + '"' + (weight && weight !== "Regular" ? ' weight="' + weight + '"'   : "") + "> "; }
 
   function nameTagRich() {
     var t = CONFIG.nameTag;
